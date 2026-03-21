@@ -1,0 +1,5 @@
+{
+  "name": "AI Code Explainer",
+  "description": "A modern web app that explains Python code step-by-step for beginners.",
+  "requestFramePermissions": []
+}
