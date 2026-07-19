@@ -1,17 +1,47 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI Code Explainer 💻</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+    
+    <!-- SEO & Meta Tags -->
+    <title>AI Code Explainer | Understand Code Instantly</title>
+    <meta name="description" content="An advanced AI-powered code analysis tool. Get line-by-line explanations, complexity analysis, and interactive step-by-step debugging for Python, JavaScript, TypeScript, Java, C, and C++." />
+    <meta name="theme-color" content="#0c0d12" />
+    
+    <!-- OpenGraph / Social Meta Tags -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="AI Code Explainer" />
+    <meta property="og:description" content="Instantly understand complex code with AI. Line-by-line explanations, execution flowcharts, and interactive debugging." />
+    <meta property="og:image" content="/og-image.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    
+    <!-- Preconnect Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+    <!-- Script to prevent flash of wrong theme -->
+    <script>
+      (function() {
+        try {
+          var saved = localStorage.getItem('theme-preference');
+          if (saved === 'light') {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.classList.add('light');
+            document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fafbfd');
+          } else if (!saved && window.matchMedia('(prefers-color-scheme: light)').matches) {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.classList.add('light');
+            document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fafbfd');
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
-
