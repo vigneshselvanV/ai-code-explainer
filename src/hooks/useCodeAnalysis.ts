@@ -78,7 +78,13 @@ export function useCodeAnalysis() {
           text = jsonMatch[0];
         }
 
-        const parsed = JSON.parse(text) as ExplanationData;
+        let parsed: ExplanationData;
+        try {
+          parsed = JSON.parse(text) as ExplanationData;
+        } catch (e) {
+          console.error("Failed to parse LLM response:", text);
+          throw new Error("The AI returned a malformed response. Please try clicking Analyze again.");
+        }
 
         // Utility to fix double-escaped literal \n characters from LLM
         const unescapeNewlines = (obj: any): any => {

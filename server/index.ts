@@ -26,8 +26,8 @@ app.post('/api/analyze', async (req, res) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        // Use the specified openrouter/free model
-        model: 'openrouter/free',
+        // Use a high-quality free model that reliably outputs JSON
+        model: 'google/gemini-2.0-flash-lite-preview-02-05:free',
         response_format: { type: 'json_object' },
         messages: req.body.messages,
       }),
