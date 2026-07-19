@@ -34,7 +34,28 @@ export function MermaidDiagram({ chart }: MermaidDiagramProps) {
       cleanChart = cleanChart.replace(/[\r\n]+```$/, '');
       // Fix literal escaped sequences from LLM JSON strings
       cleanChart = cleanChart.replace(/\\n/g, '\n').replace(/\\"/g, '"');
-      cleanChart = cleanChart.trim();
+
+      // Sanitize 1: Remove unescaped newlines inside node labels ["..."]
+      let inString = false;
+      let sanitized = '';
+      for (let i = 0; i < cleanChart.length; i++) {
+        const char = cleanChart[i];
+        if (char === '"' && cleanChart[i - 1] !== '\\') inString = !inString;
+        if (inString && (char === '\n' || char === '\r')) sanitized += ' ';
+        else sanitized += char;
+      }
+      cleanChart = sanitized;
+
+      // Sanitize 2: Cap off any severely cut-off lines at the end to prevent total render failure
+      const lines = cleanChart.split('\n');
+      const lastLine = lines[lines.length - 1].trim();
+      if (lastLine.includes('["') && !lastLine.endsWith('"]')) {
+        const idx = lastLine.lastIndexOf('["');
+        if (idx !== -1) {
+          lines[lines.length - 1] = lastLine.substring(0, idx) + '["..."]';
+        }
+      }
+      cleanChart = lines.join('\n').trim();
 
       const id = `mermaid-${uniqueId}-${Date.now()}`;
 
