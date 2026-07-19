@@ -26,8 +26,9 @@ app.post('/api/analyze', async (req, res) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        // Use the default openrouter free auto-router
-        model: 'openrouter/free',
+        // Use Gemma 31B - it reliably outputs valid JSON. 
+        // openrouter/free routes to small models that hallucinate and break the JSON parser.
+        model: 'google/gemma-4-31b-it:free',
         response_format: { type: 'json_object' },
         messages: req.body.messages,
       }),
