@@ -46,6 +46,16 @@ app.post('/api/analyze', async (req, res) => {
   }
 });
 
+// Serve static frontend files from the 'dist' directory in production
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.use(express.static(path.join(__dirname, '../dist')));
+
+// Catch-all route to serve the React app for any other requests (enables client-side routing)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/index.html'));
+});
+
 app.listen(PORT, () => {
   console.log(`Backend server listening on port ${PORT}`);
 });
