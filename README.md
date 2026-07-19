@@ -71,7 +71,7 @@ AI Code Explainer is a dual-pane web application acting as both a programming te
 
 ```bash
 # Clone the repository
-git clone https://github.com/vigneshselvan-v/ai-code-explainer.git
+git clone https://github.com/vigneshselvanV/ai-code-explainer.git
 
 # Navigate into the directory
 cd ai-code-explainer
@@ -121,4 +121,4 @@ Designed for students and beginners learning new programming languages, as well 
 ---
 
 **License:** MIT <!-- TODO: Confirm if MIT license is correct -->  
-**Built by:** [Vignesh Selvan](https://github.com/vigneshselvan-v)
+**Built by:** [Vignesh Selvan](https://github.com/vigneshselvanV)

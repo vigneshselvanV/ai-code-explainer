@@ -47,7 +47,7 @@ export default function LandingPage() {
           <span className="landing-nav__title">AI Code Explainer</span>
         </div>
         <div className="landing-nav__right">
-          <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="landing-nav__icon-link">
+          <a href="https://github.com/vigneshselvanV" target="_blank" rel="noopener noreferrer" className="landing-nav__icon-link">
             <Github size={20} />
           </a>
           <a href="https://www.linkedin.com/in/vigneshselvan-v/" target="_blank" rel="noopener noreferrer" className="landing-nav__icon-link" aria-label="LinkedIn">
@@ -91,7 +91,7 @@ export default function LandingPage() {
             <a href="/#/app" className="landing-btn landing-btn--primary">
               Launch the App <ArrowRight size={18} />
             </a>
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="landing-btn landing-btn--secondary">
+            <a href="https://github.com/vigneshselvanV/ai-code-explainer" target="_blank" rel="noopener noreferrer" className="landing-btn landing-btn--secondary">
               <Github size={18} /> View Source
             </a>
           </motion.div>
@@ -261,7 +261,7 @@ export default function LandingPage() {
       <footer className="landing-footer">
         <p>Built as a portfolio showcase. Open source and ready to explore.</p>
         <div className="landing-footer__links">
-          <a href="https://github.com/vigneshselvan-v" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="https://github.com/vigneshselvanV" target="_blank" rel="noopener noreferrer">GitHub</a>
           <a href="https://www.linkedin.com/in/vigneshselvan-v/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         </div>
       </footer>
