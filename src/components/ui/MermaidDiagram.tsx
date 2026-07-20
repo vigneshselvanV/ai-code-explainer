@@ -32,7 +32,6 @@ export function MermaidDiagram({ chart }: MermaidDiagramProps) {
       let cleanChart = chart.trim();
       cleanChart = cleanChart.replace(/^```[a-zA-Z]*\s*[\r\n]+/, '');
       cleanChart = cleanChart.replace(/[\r\n]+```$/, '');
-      // Fix literal escaped sequences from LLM JSON strings
       cleanChart = cleanChart.replace(/\\n/g, '\n').replace(/\\"/g, '"');
 
       // Sanitize 1: Remove unescaped newlines inside node labels ["..."]
@@ -46,15 +45,30 @@ export function MermaidDiagram({ chart }: MermaidDiagramProps) {
       }
       cleanChart = sanitized;
 
-      // Sanitize 2: Cap off any severely cut-off lines at the end to prevent total render failure
-      const lines = cleanChart.split('\n');
-      const lastLine = lines[lines.length - 1].trim();
-      if (lastLine.includes('["') && !lastLine.endsWith('"]')) {
-        const idx = lastLine.lastIndexOf('["');
-        if (idx !== -1) {
-          lines[lines.length - 1] = lastLine.substring(0, idx) + '["..."]';
+      // Sanitize 2: Auto-close missing brackets at the end of lines
+      // Small LLMs often forget to close nodes like `A[Label` or `B{Condition` before a newline
+      let lines = cleanChart.split('\n');
+      lines = lines.map(line => {
+        let l = line.trimEnd();
+        // Count brackets/braces to see if there's an imbalance on this specific line
+        const openSquare = (l.match(/\[/g) || []).length;
+        const closeSquare = (l.match(/\]/g) || []).length;
+        const openCurly = (l.match(/\{/g) || []).length;
+        const closeCurly = (l.match(/\}/g) || []).length;
+        
+        // If there is an open bracket but no close bracket, close it
+        if (openSquare > closeSquare && !l.endsWith(']')) {
+           // check if it has quotes
+           const openQuotes = (l.match(/"/g) || []).length;
+           if (openQuotes % 2 !== 0) l += '"'; // close quote first
+           l += ']';
+        } else if (openCurly > closeCurly && !l.endsWith('}')) {
+           const openQuotes = (l.match(/"/g) || []).length;
+           if (openQuotes % 2 !== 0) l += '"'; // close quote first
+           l += '}';
         }
-      }
+        return l;
+      });
       cleanChart = lines.join('\n').trim();
 
       const id = `mermaid-${uniqueId}-${Date.now()}`;
