@@ -18,7 +18,7 @@ export async function POST(req: Request) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'openrouter/free',
+        model: 'poolside/laguna-xs-2.1:free',
         response_format: { type: 'json_object' },
         messages: body.messages,
       }),

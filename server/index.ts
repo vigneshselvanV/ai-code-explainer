@@ -26,8 +26,8 @@ app.post('/api/analyze', async (req, res) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        // User requested exactly openrouter/free
-        model: 'openrouter/free',
+        // User requested exactly poolside/laguna-xs-2.1:free
+        model: 'poolside/laguna-xs-2.1:free',
         response_format: { type: 'json_object' },
         messages: req.body.messages,
       }),
