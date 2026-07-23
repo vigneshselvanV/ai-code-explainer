@@ -34,15 +34,40 @@ export function MermaidDiagram({ chart }: MermaidDiagramProps) {
       cleanChart = cleanChart.replace(/[\r\n]+```$/, '');
       cleanChart = cleanChart.replace(/\\n/g, '\n').replace(/\\"/g, '"');
 
-      // Sanitize 1: Remove unescaped newlines inside node labels ["..."]
+      // Sanitize 1: Replace unescaped newlines inside node labels ["..."], {...}, [...] with <br/>
       let inString = false;
+      let bracketDepth = 0;
+      let curlyDepth = 0;
+      let parenDepth = 0;
       let sanitized = '';
+      
       for (let i = 0; i < cleanChart.length; i++) {
         const char = cleanChart[i];
-        if (char === '"' && cleanChart[i - 1] !== '\\') inString = !inString;
-        if (inString && (char === '\n' || char === '\r')) sanitized += ' ';
-        else sanitized += char;
+        
+        if (char === '"' && cleanChart[i - 1] !== '\\') {
+          inString = !inString;
+        }
+        
+        if (!inString) {
+          if (char === '[') bracketDepth++;
+          else if (char === ']') bracketDepth = Math.max(0, bracketDepth - 1);
+          else if (char === '{') curlyDepth++;
+          else if (char === '}') curlyDepth = Math.max(0, curlyDepth - 1);
+          else if (char === '(') parenDepth++;
+          else if (char === ')') parenDepth = Math.max(0, parenDepth - 1);
+        }
+
+        const isInsideNode = inString || bracketDepth > 0 || curlyDepth > 0 || parenDepth > 0;
+        
+        if (isInsideNode && char === '\n') {
+          sanitized += '<br/>';
+        } else if (isInsideNode && char === '\r') {
+          // Skip \r inside nodes
+        } else {
+          sanitized += char;
+        }
       }
+      
       cleanChart = sanitized;
 
       // Sanitize 2: Auto-close missing brackets at the end of lines
